@@ -21,6 +21,11 @@ public class UserViewModel
     [Required]
     public List<string> Roles { get; set; }
 
+    //[Required]
+    public int Grade { get; set; }
+
+    public int Events_Attended { get; set; }
+
     [DataType(DataType.Password)]
     public string Password { get; set; }
 

@@ -35,8 +35,8 @@ public class UsersController : BaseController<UsersController>
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Roles { get; set; }
-        public string Grade { get; set; }
-        public string Events_Attended { get; set; }
+        public int Grade { get; set; }
+        public int Events_Attended { get; set; }
 
 	}
 

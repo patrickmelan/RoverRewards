@@ -74,7 +74,7 @@ public class Program
         var sinkOpts = new MSSqlServerSinkOptions { TableName = "ServiceLog", AutoCreateSqlTable = false };
         var columnOpts = new ColumnOptions();
 
-        var connSection = configuration.GetSection("ConnectionStrings");
+        //var connSection = configuration.GetSection("ConnectionStrings");
         var connString = configuration.GetConnectionString("AppContext");
 
         Log.Logger = new LoggerConfiguration()

@@ -32,11 +32,12 @@ public class UsersController : BaseController<UsersController>
 		[Key]
 		public string Id { get; set; }
 		public string Email { get; set; }
+        public string Password { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Roles { get; set; }
         public int Grade { get; set; }
-        public int Events_Attended { get; set; }
+        public int Points { get; set; }
 
 	}
 
@@ -76,7 +77,7 @@ public class UsersController : BaseController<UsersController>
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Email,FirstName,LastName,Roles,Password,ConfirmPassword")] UserViewModel viewModel)
+    public async Task<IActionResult> Create([Bind("Email,FirstName,LastName,Roles,Grade,Password,Points")] UserViewModel viewModel)
     {
 	    _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
 		    .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
@@ -84,7 +85,8 @@ public class UsersController : BaseController<UsersController>
 
         if (string.IsNullOrEmpty(viewModel.Password))
         {
-            ModelState.AddModelError("Password", "Password is required when creating a user");
+            //ModelState.AddModelError("Password", "Password is required when creating a user");
+            viewModel.Password = Guid.NewGuid().ToString();
         }
 
         if (ModelState.IsValid)
@@ -92,24 +94,27 @@ public class UsersController : BaseController<UsersController>
             var user = new ApplicationUser
             {
                 Id = Guid.NewGuid().ToString(),
-                UserName = viewModel.Email,
                 Email = viewModel.Email,
+                UserName = viewModel.Email,
+                PasswordHash = viewModel.Password,
                 FirstName = viewModel.FirstName,
-                LastName = viewModel.LastName
+                LastName = viewModel.LastName,
+                Grade = viewModel.Grade,
+                Points = viewModel.Points
             };
 
             user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, viewModel.Password);
 
             // create user
-            await _userManager.CreateAsync(user);
+            var createdUser = await _userManager.CreateAsync(user);
 
             // assign new roles
             await _userManager.AddToRolesAsync(user, viewModel.Roles);
 
             // send confirmation email
-            var confirmationCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            /*var confirmationCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var confirmationLink = Url.EmailConfirmationLink(user.Id, confirmationCode, Request.Scheme);
-            await _emailSender.SendEmailConfirmationAsync(viewModel.Email, confirmationLink);
+            await _emailSender.SendEmailConfirmationAsync(viewModel.Email, confirmationLink);*/
 
             return RedirectToAction(nameof(Index));
         }
@@ -132,13 +137,13 @@ public class UsersController : BaseController<UsersController>
         {
             Id = user.Id,
             Email = user.Email,
+            UserName = user.UserName,
+            Password = user.PasswordHash,
             FirstName = user.FirstName,
             LastName = user.LastName,
             Roles = roles.ToList(),
-            PhoneNumber = user.PhoneNumber,
-            PhoneNumberConfirmed = user.PhoneNumberConfirmed,
-            EmailConfirmed = user.EmailConfirmed,
-            LockoutEnabled = user.LockoutEnabled
+            Grade = user.Grade,
+            Points = user.Points
         };
         
         return View(viewModel);
@@ -146,7 +151,7 @@ public class UsersController : BaseController<UsersController>
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(string id, [Bind("Id,Email,FirstName,LastName,Roles,Password,ConfirmPassword,PhoneNumber,PhoneNumberConfirmed,EmailConfirmed,LockoutEnabled")] UserViewModel viewModel)
+    public async Task<IActionResult> Edit(string id, [Bind("Id,Email,FirstName,LastName,Roles,Password,Grade,Points")] UserViewModel viewModel)
     {
 	    _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
 		    .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
@@ -167,18 +172,14 @@ public class UsersController : BaseController<UsersController>
             try
             {
                 user.Email = viewModel.Email;
+                user.UserName = viewModel.UserName;
+                user.PasswordHash = viewModel.Password;
                 user.FirstName = viewModel.FirstName;
                 user.LastName = viewModel.LastName;
-                user.PhoneNumber = viewModel.PhoneNumber;
-                user.PhoneNumberConfirmed = viewModel.PhoneNumberConfirmed;
-                user.EmailConfirmed = viewModel.EmailConfirmed;
-                user.LockoutEnabled = viewModel.LockoutEnabled;
+                user.Grade = viewModel.Grade;
+                user.Points = viewModel.Points;
 
-                if (!string.IsNullOrEmpty(viewModel.Password) && viewModel.Password == viewModel.ConfirmPassword)
-                {
-                    // change the password
-                    user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, viewModel.Password);
-                }
+                
 
                 // update user
                 _context.Update(user);
@@ -223,9 +224,13 @@ public class UsersController : BaseController<UsersController>
         {
             Id = user.Id,
             Email = user.Email,
+            UserName = user.UserName,
+            Password = user.PasswordHash,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            Roles = roles.ToList()
+            Roles = roles.ToList(),
+            Grade = user.Grade,
+            Points = user.Points
         };
 
         return View(viewModel);
@@ -244,9 +249,13 @@ public class UsersController : BaseController<UsersController>
         {
             Id = user.Id,
             Email = user.Email,
+            UserName = user.UserName,
+            Password = user.PasswordHash,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            Roles = roles.ToList()
+            Roles = roles.ToList(),
+            Grade = user.Grade,
+            Points = user.Points
         };
 
         return View(viewModel);
@@ -280,9 +289,12 @@ public class UsersController : BaseController<UsersController>
             {
                 Id = x.Id,
                 Email = x.Email,
+                Password = x.PasswordHash,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
-                Roles = String.Join(", ", x.UserRoles.Select(ur => ur.Role.Name).ToList())
+                Roles = String.Join(", ", x.UserRoles.Select(ur => ur.Role.Name).ToList()),
+                Grade = x.Grade,
+                Points = x.Points
             }).ToListAsync();
             
             return users.AsQueryable();

@@ -10,6 +10,7 @@ public class UserViewModel
     [Required]
     [DataType(DataType.EmailAddress)]
     public string Email { get; set; }
+    public string UserName { get; set; }
 
     [Display(Name = "First Name")]
     [Required]
@@ -17,16 +18,19 @@ public class UserViewModel
 
     [Display(Name = "Last Name")]
     public string LastName { get; set; }
+    public string Password { get; set; }
 
     [Required]
     public List<string> Roles { get; set; }
 
-    //[Required]
+    [Display(Name = "Grade")]
+    [Required]
     public int Grade { get; set; }
+    
+    [Display(Name = "Points")]
+    public int Points { get; set; }
 
-    public int Events_Attended { get; set; }
-
-    [DataType(DataType.Password)]
+    /*[DataType(DataType.Password)]
     public string Password { get; set; }
 
     [DataType(DataType.Password)]
@@ -41,6 +45,6 @@ public class UserViewModel
     [DataType(DataType.PhoneNumber)]
     public string PhoneNumber { get; set; }
     [Display(Name = "Phone Number Confirmed")]
-    public bool PhoneNumberConfirmed { get; set; }
+    public bool PhoneNumberConfirmed { get; set; }*/
 
 }

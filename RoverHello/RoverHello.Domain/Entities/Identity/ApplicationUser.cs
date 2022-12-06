@@ -25,6 +25,10 @@ public class ApplicationUser : IdentityUser<string>
 
     public virtual string FullName => FirstName.Trim() + " " + LastName?.Trim();
 
+    public int Grade { get; set; }
+    public int Events_Attended { get; set; }
+    public int Points { get; set; }
+
     public virtual string GravitarHash()
     {
         MD5 md5Hasher = MD5.Create();

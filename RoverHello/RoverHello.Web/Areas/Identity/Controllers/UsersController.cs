@@ -32,8 +32,8 @@ public class UsersController : BaseController<UsersController>
 		[Key]
 		public string Id { get; set; }
 		public string Email { get; set; }
-        public string Password { get; set; }
 		public string FirstName { get; set; }
+
 		public string LastName { get; set; }
 		public string Roles { get; set; }
         public int Grade { get; set; }
@@ -289,7 +289,6 @@ public class UsersController : BaseController<UsersController>
             {
                 Id = x.Id,
                 Email = x.Email,
-                Password = x.PasswordHash,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
                 Roles = String.Join(", ", x.UserRoles.Select(ur => ur.Role.Name).ToList()),

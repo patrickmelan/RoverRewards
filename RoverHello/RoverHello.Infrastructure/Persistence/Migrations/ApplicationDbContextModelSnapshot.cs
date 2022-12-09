@@ -8,7 +8,7 @@ using RoverHello.Infrastructure.Persistence.DbContexts;
 
 #nullable disable
 
-namespace RoverHello.Infrastructure.Persistence.Migrations
+namespace RoverHello.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot

@@ -9,11 +9,11 @@ using RoverHello.Infrastructure.Persistence.DbContexts;
 
 #nullable disable
 
-namespace RoverHello.Infrastructure.Persistence.Migrations
+namespace RoverHello.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221206173226_AddedReward")]
-    partial class AddedReward
+    [Migration("20221209191046_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

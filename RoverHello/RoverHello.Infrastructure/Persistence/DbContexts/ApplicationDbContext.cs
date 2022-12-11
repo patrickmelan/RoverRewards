@@ -29,6 +29,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<AuditLog> AuditLog { get; set; }
     public DbSet<ActivityLog> ActivityLog { get; set; }
     public DbSet<Reward> Reward { get; set; }
+    public DbSet<Event> Event { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

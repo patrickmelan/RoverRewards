@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RoverHello.Domain.Entities
 {
-    internal class Event{
+    public class Event{
 
         [Key]
         public int Id { get; set; }

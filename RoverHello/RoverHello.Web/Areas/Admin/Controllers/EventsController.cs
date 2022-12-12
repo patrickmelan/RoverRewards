@@ -26,13 +26,15 @@ public class EventsController : BaseController<EventsController>
 	{
 		[Key]            
 	    public int Id { get; set; }
+
+        public DateTime Date { get; set; }
 	    public string Name { get; set; }
 	    public int Points { get; set; }
 	    public string Description { get; set; }
 	}
 
-	private const string createBindingFields = "Id,Name,Points,Description";
-    private const string editBindingFields = "Id,Name,Points,Description";
+	private const string createBindingFields = "Id,Date,Name,Points,Description";
+    private const string editBindingFields = "Id,Date,Name,Points,Description";
     private const string areaTitle = "Admin";
 
     private readonly ApplicationDbContext _context;
@@ -160,6 +162,7 @@ public class EventsController : BaseController<EventsController>
         Event model = await _context.Event.FindAsync(id);
 
         model.Name = @event.Name;
+        model.Date = @event.Date;
         model.Points = @event.Points;
         model.Description = @event.Description;
         // Remove validation errors from fields that aren't in the binding field list

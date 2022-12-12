@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace RoverHello.Domain.Entities
 {
-    public class Event{
+    public class Event {
 
         [Key]
         public int Id { get; set; }
+        public DateTime Date { get; set;}
         public string Name { get; set; }
 
         public int Points { get; set; }

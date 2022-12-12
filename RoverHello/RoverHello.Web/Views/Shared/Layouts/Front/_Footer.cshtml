@@ -7,16 +7,15 @@
         <div class="row gy-4 gx-5">
             <div class="col-lg-4 col-md-6">
                 <h5 class="h1 text-white">@Settings.SiteName</h5>
-                <p class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                <p class="small text-muted">Attend, Earn, and Redeem with RoverRewards!</p>
                 <p class="small text-muted mb-0">Copyright &copy; @DateTime.Now.Year @Settings.Company</p>
             </div>
             <div class="col-lg-2 col-md-6">
                 <h5 class="text-white mb-3">Quick links</h5>
                 <ul class="list-unstyled text-muted">
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Get started</a></li>
-                    <li><a href="#">FAQ</a></li>
+                    <li><a asp-controller="home" asp-action="about" >About</a></li>
+                    <li><a asp-area="identity" asp-controller="account" asp-action="register">Get started</a></li>
                 </ul>
             </div>
             <div class="col-lg-2 col-md-6">
@@ -29,7 +28,7 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <h5 class="text-white mb-3">Newsletter</h5>
-                <p class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+                <p class="small text-muted">Join the RoverRewards newsletter to stay up-to-date on the latest events, rewards, and special offers.</p>
                 <form action="#">
                     <div class="input-group mb-3">
                         <input class="form-control" type="text" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -41,6 +40,7 @@
                     <ul class="list-inline list-inline-dots mb-0">
                         <li class="list-inline-item"><a asp-area="" asp-controller="Home" asp-action="Privacy" class="link-secondary">Privacy Policy</a></li>
                         <li class="list-inline-item"><a asp-area="" asp-controller="Home" asp-action="TOS" class="link-secondary">Terms of Service</a></li>
+                        <li class="list-inline-item"><a asp-area="" asp-controller="Home" asp-action="FAQ" class="link-secondary">FAQ</a></li>
                     </ul>
                 </div>
             </div>

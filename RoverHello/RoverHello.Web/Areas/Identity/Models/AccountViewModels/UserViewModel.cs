@@ -23,11 +23,10 @@ public class UserViewModel
     [Required]
     public List<string> Roles { get; set; }
 
-    [Display(Name = "Grade")]
     [Required]
     public int Grade { get; set; }
     
-    [Display(Name = "Points")]
+    [Display(Name = "Treats")]
     public int Points { get; set; }
 
     /*[DataType(DataType.Password)]

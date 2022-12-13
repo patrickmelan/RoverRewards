@@ -19,30 +19,25 @@
 <div class="card shadow mb-5">
 	<div class="card-body">
 		<dl class="dl-horizontal">
+			
 			<dt>
-				@Html.DisplayNameFor(model => model.Email)
+				Email: @Html.DisplayFor(model => model.Email)
 			</dt>
-			<dd>
-				@Html.DisplayFor(model => model.UserName)
-			</dd>
 			<dt>
-				@Html.DisplayNameFor(model => model.FirstName)
+				First Name: @Html.DisplayFor(model => model.FirstName)
 			</dt>
-			<dd>
-				@Html.DisplayFor(model => model.LastName)
-			</dd>
 			<dt>
-				@Html.DisplayNameFor(model => model.Password)
+				Last Name: @Html.DisplayFor(model => model.LastName)
 			</dt>
-			<dd>
-				@Html.DisplayFor(model => model.Roles)
-			</dd>
 			<dt>
-				@Html.DisplayNameFor(model => model.Grade)
+				Role: @Html.DisplayFor(model => model.Roles)
 			</dt>
-			<dd>
-				@Html.DisplayFor(model => model.Points)
-			</dd>
+			<dt>
+				Grade: @Html.DisplayFor(model => model.Grade)
+			</dt>
+			<dt>
+				Points: @Html.DisplayFor(model => model.Points)
+			</dt>
 		</dl>
 	</div>
 </div>

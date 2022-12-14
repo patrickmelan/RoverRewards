@@ -11,6 +11,12 @@
     padding-bottom: 5rem;
 }
 
+.html5buttons {
+    float: right;
+    margin-top: 15px;
+    margin-left: 5px;
+}
+
 .breadcrumb {
     margin-bottom: 1rem;
 }

@@ -7,29 +7,23 @@
 
 
         <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Email)
-            </dt>
             <dd>
-                @Html.DisplayFor(model => model.Email)
+                Email: @Html.DisplayFor(model => model.Email)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.FirstName)
+                First Name: @Html.DisplayFor(model => model.FirstName)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.FirstName)
+                Last Name: @Html.DisplayFor(model => model.LastName)
+            </dd>
+            <dd>
+                Role: @Html.DisplayFor(model => model.Roles)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.LastName)
+                Grade: @Html.DisplayFor(model => model.Grade)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.LastName)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Roles)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Roles)
+                Points: @Html.DisplayFor(model => model.Points)
             </dd>
         </dl>
 

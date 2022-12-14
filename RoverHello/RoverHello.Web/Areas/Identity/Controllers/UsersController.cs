@@ -27,19 +27,19 @@ namespace RoverHello.Web.Areas.Identity.Controllers;
 [Authorize(Roles = "Admin")]
 public class UsersController : BaseController<UsersController>
 {
-	public class UsersIndexViewModel
-	{
-		[Key]
-		public string Id { get; set; }
-		public string Email { get; set; }
-		public string FirstName { get; set; }
+    public class UsersIndexViewModel
+    {
+        [Key]
+        public string Id { get; set; }
+        public string Email { get; set; }
+        public string FirstName { get; set; }
 
-		public string LastName { get; set; }
-		public string Roles { get; set; }
+        public string LastName { get; set; }
+        public string Roles { get; set; }
         public int Grade { get; set; }
         public int Points { get; set; }
 
-	}
+    }
 
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
@@ -56,20 +56,20 @@ public class UsersController : BaseController<UsersController>
 
     public IActionResult Index()
     {
-	    _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
-		    .Then("Manage Users");
+        _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
+            .Then("Manage Users");
 
-	    // Fetch descriptive data from the index dto to build the datatables index
-	    var metadata = DatatableExtensions.GetDtMetadata<UsersIndexViewModel>();
+        // Fetch descriptive data from the index dto to build the datatables index
+        var metadata = DatatableExtensions.GetDtMetadata<UsersIndexViewModel>();
 
-	    return View(metadata);
+        return View(metadata);
     }
 
     public async Task<IActionResult> Create()
     {
-	    _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
-		    .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
-		    .Then("Create User");
+        _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
+            .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
+            .Then("Create User");
 
         ViewBag.Roles = new SelectList(await _roleManager.Roles.OrderBy(x => x.Name).ToListAsync(), "Name", "Name");
         return View();
@@ -79,9 +79,9 @@ public class UsersController : BaseController<UsersController>
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Email,FirstName,LastName,Roles,Grade,Password,Points")] UserViewModel viewModel)
     {
-	    _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
-		    .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
-		    .Then("Create User");
+        _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
+            .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
+            .Then("Create User");
 
         if (string.IsNullOrEmpty(viewModel.Password))
         {
@@ -124,9 +124,9 @@ public class UsersController : BaseController<UsersController>
 
     public async Task<IActionResult> Edit(string id)
     {
-	    _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
-		    .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
-		    .Then("Edit User");
+        _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
+            .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
+            .Then("Edit User");
 
         var user = await _context.Users.FindAsync(id);
         var roles = await _userManager.GetRolesAsync(user);
@@ -145,7 +145,7 @@ public class UsersController : BaseController<UsersController>
             Grade = user.Grade,
             Points = user.Points
         };
-        
+
         return View(viewModel);
     }
 
@@ -153,9 +153,9 @@ public class UsersController : BaseController<UsersController>
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(string id, [Bind("Id,Email,FirstName,LastName,Roles,Password,Grade,Points")] UserViewModel viewModel)
     {
-	    _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
-		    .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
-		    .Then("Edit User");
+        _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
+            .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
+            .Then("Edit User");
 
         if (id != viewModel.Id)
         {
@@ -164,10 +164,10 @@ public class UsersController : BaseController<UsersController>
 
         if (ModelState.IsValid)
         {
-	        var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
 
-	        if (user == null)
-		        return NotFound();
+            if (user == null)
+                return NotFound();
 
             try
             {
@@ -179,7 +179,7 @@ public class UsersController : BaseController<UsersController>
                 user.Grade = viewModel.Grade;
                 user.Points = viewModel.Points;
 
-                
+
 
                 // update user
                 _context.Update(user);
@@ -213,9 +213,9 @@ public class UsersController : BaseController<UsersController>
 
     public async Task<IActionResult> Details(string id)
     {
-	    _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
-		    .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
-		    .Then("User Details");
+        _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
+            .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
+            .Then("User Details");
 
         var user = await _context.Users.FindAsync(id);
         var roles = await _userManager.GetRolesAsync(user);
@@ -238,9 +238,9 @@ public class UsersController : BaseController<UsersController>
 
     public async Task<IActionResult> Delete(string id)
     {
-	    _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
-		    .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
-		    .Then("Delete User");
+        _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
+            .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
+            .Then("Delete User");
 
         var user = await _context.Users.FindAsync(id);
         var roles = await _userManager.GetRolesAsync(user);
@@ -295,15 +295,15 @@ public class UsersController : BaseController<UsersController>
                 Grade = x.Grade,
                 Points = x.Points
             }).ToListAsync();
-            
-            return users.AsQueryable();
+
+        return users.AsQueryable();
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> GetUsers(DtRequest request)
     {
-	    try
+        try
         {
             // Query the database for all of the users and their roles
             var users = await GetUsersAsync();
@@ -311,13 +311,13 @@ public class UsersController : BaseController<UsersController>
             // Filter the users list based on the datatables request
             var jsonData = users.GetDatatableResponse<UsersIndexViewModel, UsersIndexViewModel>(request);
 
-		    return Ok(jsonData);
-	    }
-	    catch (Exception ex)
-	    {
-		    _logger.LogError(ex, "Error generating Users index json");
-	    }
+            return Ok(jsonData);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error generating Users index json");
+        }
 
-	    return StatusCode(500);
+        return StatusCode(500);
     }
 }

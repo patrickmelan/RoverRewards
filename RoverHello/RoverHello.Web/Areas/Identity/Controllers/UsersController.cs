@@ -38,6 +38,7 @@ public class UsersController : BaseController<UsersController>
         public string Roles { get; set; }
         public int Grade { get; set; }
         public int Points { get; set; }
+        public int StudentId { get; set; }
 
     }
 
@@ -77,7 +78,7 @@ public class UsersController : BaseController<UsersController>
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Email,FirstName,LastName,Roles,Grade,Password,Points")] UserViewModel viewModel)
+    public async Task<IActionResult> Create([Bind("Email,FirstName,LastName,Roles,Grade,Password,Points,StudentId")] UserViewModel viewModel)
     {
         _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
             .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
@@ -100,8 +101,9 @@ public class UsersController : BaseController<UsersController>
                 FirstName = viewModel.FirstName,
                 LastName = viewModel.LastName,
                 Grade = viewModel.Grade,
-                Points = viewModel.Points
-            };
+                Points = viewModel.Points,
+				StudentId = viewModel.StudentId
+			};
 
             user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, viewModel.Password);
 
@@ -143,15 +145,16 @@ public class UsersController : BaseController<UsersController>
             LastName = user.LastName,
             Roles = roles.ToList(),
             Grade = user.Grade,
-            Points = user.Points
-        };
+            Points = user.Points,
+			StudentId = user.StudentId
+		};
 
         return View(viewModel);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(string id, [Bind("Id,Email,FirstName,LastName,Roles,Password,Grade,Points")] UserViewModel viewModel)
+    public async Task<IActionResult> Edit(string id, [Bind("Id,Email,FirstName,LastName,Roles,Password,Grade,Points,StudentId")] UserViewModel viewModel)
     {
         _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
             .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
@@ -178,6 +181,7 @@ public class UsersController : BaseController<UsersController>
                 user.LastName = viewModel.LastName;
                 user.Grade = viewModel.Grade;
                 user.Points = viewModel.Points;
+                user.StudentId = viewModel.StudentId;
 
 
 
@@ -230,7 +234,8 @@ public class UsersController : BaseController<UsersController>
             LastName = user.LastName,
             Roles = roles.ToList(),
             Grade = user.Grade,
-            Points = user.Points
+            Points = user.Points,
+            StudentId= user.StudentId
         };
 
         return View(viewModel);
@@ -255,8 +260,9 @@ public class UsersController : BaseController<UsersController>
             LastName = user.LastName,
             Roles = roles.ToList(),
             Grade = user.Grade,
-            Points = user.Points
-        };
+            Points = user.Points,
+			StudentId = user.StudentId
+		};
 
         return View(viewModel);
     }
@@ -293,7 +299,8 @@ public class UsersController : BaseController<UsersController>
                 LastName = x.LastName,
                 Roles = String.Join(", ", x.UserRoles.Select(ur => ur.Role.Name).ToList()),
                 Grade = x.Grade,
-                Points = x.Points
+                Points = x.Points,
+                StudentId = x.StudentId
             }).ToListAsync();
 
         return users.AsQueryable();

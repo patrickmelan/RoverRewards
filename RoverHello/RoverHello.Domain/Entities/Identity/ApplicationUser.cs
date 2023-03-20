@@ -28,6 +28,7 @@ public class ApplicationUser : IdentityUser<string>
     public int Grade { get; set; }
     public int Events_Attended { get; set; }
     public int Points { get; set; }
+    public int StudentId { get; set; }
 
     public virtual string GravitarHash()
     {

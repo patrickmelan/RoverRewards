@@ -28,6 +28,8 @@ public class UserViewModel
     
     [Display(Name = "Treats")]
     public int Points { get; set; }
+    [Display(Name = "Student ID")]
+    public int StudentId { get; set; }
 
     /*[DataType(DataType.Password)]
     public string Password { get; set; }

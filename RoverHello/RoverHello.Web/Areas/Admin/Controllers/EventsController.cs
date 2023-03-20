@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using RoverHello.Domain.Entities;
 using RoverHello.Infrastructure.Persistence.DbContexts;
+using System.Collections.Generic;
+using RoverHello.Web.Areas.Identity.Models.AccountViewModels;
 
 namespace RoverHello.Web.Areas.Admin.Controllers;
 
@@ -31,10 +33,11 @@ public class EventsController : BaseController<EventsController>
 	    public string Name { get; set; }
 	    public int Points { get; set; }
 	    public string Description { get; set; }
+        public List<UserViewModel> Attendees { get; set; } 
 	}
 
-	private const string createBindingFields = "Id,Date,Name,Points,Description";
-    private const string editBindingFields = "Id,Date,Name,Points,Description";
+	private const string createBindingFields = "Id,Date,Name,Points,Description,Attendees";
+    private const string editBindingFields = "Id,Date,Name,Points,Description,Attendees";
     private const string areaTitle = "Admin";
 
     private readonly ApplicationDbContext _context;
@@ -165,6 +168,7 @@ public class EventsController : BaseController<EventsController>
         model.Date = @event.Date;
         model.Points = @event.Points;
         model.Description = @event.Description;
+        model.Attendees = @event.Attendees;
         // Remove validation errors from fields that aren't in the binding field list
         ModelState.Scrub(editBindingFields);           
 

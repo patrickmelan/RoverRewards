@@ -42,14 +42,6 @@
                         <input asp-for="Description" class="form-control" />
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
-                    <div>
-                        <ul>
-                        @foreach (var attendee in Model.Attendees)
-                        {
-                            <li>@attendee.User.UserName</li>
-                        }
-                        </ul>
-                    </div>
                     <div class="form-group">
                         <input type="submit" value="Save" class="btn btn-primary" />
                     </div>
@@ -60,46 +52,44 @@
     </div>
 </div>
 
-<form asp-action="AddAttendee">
-    <div class="form-group">
-        <label asp-formaction="User" class="control-label">Please select attendees.</label>
-        <select asp-for="Attendees" asp-items="ViewBag.Users" multiple="multiple" class="form-control">
+<div class="card shadow mb-5">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
 
-        </select>
+                <form asp-action="AddAttendee">
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="form-group">
+                        <label asp-formaction="User" class="control-label">Please select attendees.</label>
+                        <select asp-for="Attendees" asp-items="ViewBag.Users" multiple="multiple" class="form-control js-select2">
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add Attendees" class="btn btn-primary" />
+                    </div>
+                </form>
+
+            </div>
+        </div>
     </div>
-</form>
+</div>
 
 <div>
     <a asp-action="Index" class="btn btn-default mt-4">Back to List</a>
 </div>
 
 @section Styles {
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css" />
 }
 
 @section Scripts {
-
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
-
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/vendor/select2/select2.min.js"></script>
 
     <script type="text/javascript">
-
-        $(document).ready(function() {
-            $("#Member").select2({
-                tags: true,
-                createTag: function (params) {
-                    if (params.term.indexOf('@@') === -1) {
-                        return null;
-                    }
-
-                    return {
-                        id: params.term,
-                        text: paras.term
-                    }
-                }
-            });
+        $(document).ready(function () {
+            $('.js-select2').select2();
         });
-
     </script>
 }

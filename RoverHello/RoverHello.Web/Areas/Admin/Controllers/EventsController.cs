@@ -174,14 +174,17 @@ public class EventsController : BaseController<EventsController>
         {
             return NotFound();
         }
-        
-        Event model = await _context.Event.FindAsync(id);
+
+        var model = await _context.Event
+            .Include(x => x.Attendees)
+                .ThenInclude(x => x.User)
+            .Where(x => x.Id == id).FirstOrDefaultAsync();
 
         model.Name = @event.Name;
         model.Date = @event.Date;
         model.Points = @event.Points;
         model.Description = @event.Description;
-        model.Attendees = @event.Attendees;
+
         // Remove validation errors from fields that aren't in the binding field list
         ModelState.Scrub(editBindingFields);           
 
@@ -206,6 +209,36 @@ public class EventsController : BaseController<EventsController>
             return RedirectToAction(nameof(Index));
         }
         return View(@event);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddAttendee(int id, List<string> attendees)
+    {
+        var model = await _context.Event
+            .Include(x => x.Attendees)
+                .ThenInclude(x => x.User)
+            .Where(x => x.Id == id).FirstOrDefaultAsync();
+
+        model.Attendees = attendees.Select(x => new Attendee
+        {
+            UserId = x,
+            EventId = id
+        }).ToList();
+
+        await _context.SaveChangesAsync();
+
+        foreach (var attendee in model.Attendees)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == attendee.UserId);
+
+            if (user != null)
+            {
+                user.Points += model.Points;
+            }
+            await _context.SaveChangesAsync();
+        }
+
+        return RedirectToAction("Edit", new { Id = id });
     }
 
     // GET: Admin/Events/Delete/5

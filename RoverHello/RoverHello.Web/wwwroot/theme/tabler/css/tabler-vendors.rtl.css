@@ -357,7 +357,7 @@
   box-shadow: none;
   background: none;
   border-radius: 0;
-  color: #206bc4;
+  color: #fd0000;
 }
 
 .noUi-horizontal {
@@ -401,12 +401,12 @@
   --litepicker-month-weekday-color: #626976;
   --litepicker-button-prev-month-color: #626976;
   --litepicker-button-next-month-color: #626976;
-  --litepicker-button-prev-month-color-hover: #206bc4;
-  --litepicker-button-next-month-color-hover: #206bc4;
+  --litepicker-button-prev-month-color-hover: #fd0000;
+  --litepicker-button-next-month-color-hover: #fd0000;
   --litepicker-day-color: var(--tblr-body-color);
-  --litepicker-day-color-hover: #206bc4;
-  --litepicker-is-end-color-bg: #206bc4;
-  --litepicker-is-today-color: #206bc4;
+  --litepicker-day-color-hover: #fd0000;
+  --litepicker-is-end-color-bg: #fd0000;
+  --litepicker-is-today-color: #fd0000;
   --litepicker-month-header-color: var(--tblr-body-color);
   --litepicker-container-months-color-bg: var(--tblr-card-bg);
   font: inherit;
@@ -682,7 +682,7 @@
   border: 0px solid #e6e7e9;
 }
 .ts-wrapper.multi .ts-control > div.active {
-  background: #206bc4;
+  background: #fd0000;
   color: #fff;
   border: 0px solid rgba(0, 0, 0, 0);
 }

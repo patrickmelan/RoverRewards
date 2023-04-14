@@ -9,11 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RoverHello.Domain.Entities
 {
-	[Keyless]
 	public class Event {
 
-		//[Key]
-		
+		[Key]
 		public int Id { get; set; }
         public DateTime Date { get; set;}
         public string Name { get; set; }
@@ -21,7 +19,7 @@ namespace RoverHello.Domain.Entities
         public int Points { get; set; }
         public string Description { get; set; }
 
-        public List<string> Attendees {  get; set; }
+        public List<Attendee> Attendees {  get; set; }
 
     }
 }

@@ -17,6 +17,7 @@ using RoverHello.Domain.Entities;
 using RoverHello.Infrastructure.Persistence.DbContexts;
 using System.Collections.Generic;
 using RoverHello.Web.Areas.Identity.Models.AccountViewModels;
+using Org.BouncyCastle.Math.EC.Rfc7748;
 
 namespace RoverHello.Web.Areas.Admin.Controllers;
 
@@ -33,8 +34,8 @@ public class EventsController : BaseController<EventsController>
 	    public string Name { get; set; }
 	    public int Points { get; set; }
 	    public string Description { get; set; }
-        public List<UserViewModel> Attendees { get; set; } 
 	}
+
 
 	private const string createBindingFields = "Id,Date,Name,Points,Description,Attendees";
     private const string editBindingFields = "Id,Date,Name,Points,Description,Attendees";
@@ -56,7 +57,8 @@ public class EventsController : BaseController<EventsController>
 		// Fetch descriptive data from the index dto to build the datatables index
 		var metadata = DatatableExtensions.GetDtMetadata<EventIndexViewModel>();
 		
-		return View(metadata);
+		
+        return View(metadata);
    }
 
     // GET: Admin/Events/Details/5
@@ -73,7 +75,10 @@ public class EventsController : BaseController<EventsController>
         }
 
         var @event = await _context.Event
+            .Include(x => x.Attendees)
+                .ThenInclude(x => x.User)
             .FirstOrDefaultAsync(m => m.Id == id);
+
         if (@event == null)
         {
             return NotFound();
@@ -134,13 +139,21 @@ public class EventsController : BaseController<EventsController>
             return NotFound();
         }
 
-        var @event = await _context.Event.FindAsync(id);
+        var @event = await _context.Event
+            .Include(x => x.Attendees)
+                .ThenInclude(x => x.User)
+            .Where(x => x.Id == id).FirstOrDefaultAsync();
+
+
         if (@event == null)
         {
             return NotFound();
         }
-        
 
+        ViewBag.Users = new MultiSelectList(await _context.Users.ToListAsync(),
+            "Id", "FullName", @event.Attendees.Select(x => x.User).ToList() ?? new());
+        
+        
         return View(@event);
     }
 
@@ -248,7 +261,7 @@ public class EventsController : BaseController<EventsController>
 			var query = _context.Event;
 			var jsonData = await query.GetDatatableResponseAsync<Event, EventIndexViewModel>(request);
 
-            return Ok(jsonData);
+             return Ok(jsonData);
         }
         catch (Exception ex)
         {

@@ -138,18 +138,19 @@ public class EventsController : BaseController<EventsController>
         {
             return NotFound();
         }
-
+        //creates the event and ability for attendees to be added
         var @event = await _context.Event
             .Include(x => x.Attendees)
                 .ThenInclude(x => x.User)
             .Where(x => x.Id == id).FirstOrDefaultAsync();
 
-
+        //returns error screen if no eventID is found
         if (@event == null)
         {
             return NotFound();
         }
 
+        //
         ViewBag.Users = new MultiSelectList(await _context.Users.ToListAsync(),
             "Id", "FullName", @event.Attendees.Select(x => x.User).ToList() ?? new());
         
@@ -157,9 +158,7 @@ public class EventsController : BaseController<EventsController>
         return View(@event);
     }
 
-    // POST: Admin/Events/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, [Bind(editBindingFields)] Event @event)
@@ -214,11 +213,13 @@ public class EventsController : BaseController<EventsController>
     [HttpPost]
     public async Task<IActionResult> AddAttendee(int id, List<string> attendees)
     {
+        //creates attendee model and connection between 'Attendee' and 'User'
         var model = await _context.Event
             .Include(x => x.Attendees)
                 .ThenInclude(x => x.User)
             .Where(x => x.Id == id).FirstOrDefaultAsync();
-
+        
+        //list of attendees is added to after selection on 'EDIT' screen
         model.Attendees = attendees.Select(x => new Attendee
         {
             UserId = x,
@@ -226,11 +227,13 @@ public class EventsController : BaseController<EventsController>
         }).ToList();
 
         await _context.SaveChangesAsync();
-
+        
+        //adds amount of points event is worth to each attendee
         foreach (var attendee in model.Attendees)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == attendee.UserId);
 
+            //if there is a user AKA user!=null, event points are added to that users account
             if (user != null)
             {
                 user.Points += model.Points;

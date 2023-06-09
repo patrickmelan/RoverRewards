@@ -233,7 +233,7 @@ public class EventsController : BaseController<EventsController>
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == attendee.UserId);
 
-            //if there is a user AKA user!=null, event points are added to that users account
+            //if there is a user AKA user!=null, event points are added to that users account 
             if (user != null)
             {
                 user.Points += model.Points;

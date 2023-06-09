@@ -171,7 +171,8 @@ public class UsersController : BaseController<UsersController>
 
             if (user == null)
                 return NotFound();
-
+            //if there is no error when searching for user, do this
+            //each aspect of user becomes new item when changed on edit screen
             try
             {
                 user.Email = viewModel.Email;
@@ -196,6 +197,7 @@ public class UsersController : BaseController<UsersController>
                 // assign new role
                 await _userManager.AddToRolesAsync(user, viewModel.Roles);
             }
+            // if there is a user finding eror, will return error screen
             catch (DbUpdateConcurrencyException)
             {
                 if (!UserExists(viewModel.Id))

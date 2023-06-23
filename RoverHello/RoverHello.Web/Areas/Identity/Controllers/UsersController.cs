@@ -19,6 +19,7 @@ using RoverHello.Infrastructure.Persistence.Extensions;
 using RoverCore.BreadCrumbs.Services;
 using RoverCore.Datatables.DTOs;
 using RoverCore.Datatables.Extensions;
+using System.Data;
 
 namespace RoverHello.Web.Areas.Identity.Controllers;
 
@@ -242,6 +243,7 @@ public class UsersController : BaseController<UsersController>
 
         return View(viewModel);
     }
+   
 
     public async Task<IActionResult> Delete(string id)
     {
@@ -266,7 +268,7 @@ public class UsersController : BaseController<UsersController>
 			StudentId = user.StudentId
 		};
 
-        return View(viewModel);
+         return View(viewModel);
     }
 
     [HttpPost, ActionName("Delete")]
@@ -282,7 +284,36 @@ public class UsersController : BaseController<UsersController>
     {
         return _context.Users.Any(x => x.Id == id);
     }
+    public async Task<IActionResult> Random()
+    {
+        _breadcrumbs.StartAtAction("Dashboard", "Index", "Home", new { Area = "Dashboard" })
+            .ThenAction("Manage Users", "Index", "Users", new { Area = "Identity" })
+            .Then("Random Winner");
 
+        
+        var users = _context.Users.ToList();
+        Random rnd = new Random();
+        var id = users[rnd.Next(users.Count)].Id;
+		
+        var user = await _context.Users.FindAsync(id);
+		var roles = await _userManager.GetRolesAsync(user);
+
+		var viewModel = new UserViewModel
+		{
+			Id = user.Id,
+			Email = user.Email,
+			UserName = user.UserName,
+			Password = user.PasswordHash,
+			FirstName = user.FirstName,
+			LastName = user.LastName,
+			Roles = roles.ToList(),
+			Grade = user.Grade,
+			Points = user.Points,
+			StudentId = user.StudentId
+		};
+
+		return View(viewModel);
+    }
     /// <summary>
     /// Return a list of all users and the roles that they have (as a comma-separated string)
     /// </summary>
@@ -329,4 +360,5 @@ public class UsersController : BaseController<UsersController>
 
         return StatusCode(500);
     }
+
 }

@@ -1,16 +1,15 @@
 # RoverRewards
 
-RoverRewards is a rewards program for students. By attending school events, such as sports matches or band concerts, students can earn Treats, which are rewards points that can be used to purchase rewards. Administrators can track these stats, including the ability to add/remove these students, create events, and create rewards.
+RoverRewards is a rewards program for students. By attending school events, such as sports matches or band concerts, students can earn Treats, which are rewards points that can be used to purchase rewards. Administrators can track these stats, including the ability to add/remove these students, create events, and create rewards. Built for 2023 FBLA Coding & Programming Compeititon. Built by 2023 Pennsylvania State Champion, Patrick Melan, Easton Area High School '25
 
 
 **Project Features**: 
 - Admin Navigation Bar
-- CRUD Users
-- CRUD Events
-- CRUD Roles
-- CRUD Rewards
+- CRUD Users, Events, Roles, and Rewards!
 - Light/Dark Modes
 - Add Attendees
+- Pick Random Winners
+- 5 Different Export Methods
 
 
 ## Prerequisites
@@ -46,3 +45,7 @@ Here's what you need to get your project running:
 - Seed Data
   - When running the project for the first time, the database will be seeded with an admin user.
   - You can log in to this account with the username `admin` and the password `Password123!`. It is _highly_ recommended that you change this password after logging in for the first time.
+
+ ## Closing
+ -Built for 2023 FBLA Coding & Programming Compeititon. 
+ -Built by 2023 Pennsylvania State Champion, Patrick Melan, EAHS '25

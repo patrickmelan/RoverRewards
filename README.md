@@ -5,12 +5,10 @@ RoverRewards is a rewards program for students. By attending school events, such
 
 **Project Features**: 
 - Admin Navigation Bar
-- CRUD Users
-- CRUD Events
-- CRUD Roles
-- CRUD Rewards
+- CRUD Users, Events, Roles, and Rewards
 - Light/Dark Modes
-- Add Attendees
+- Add Attendees to Events
+- 5 Different Methods of Exporting Student Data
 
 
 ## Prerequisites
